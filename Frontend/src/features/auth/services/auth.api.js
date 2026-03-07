@@ -13,7 +13,8 @@ export async function register({ username, email, password }) {
         return response.data
 
     } catch (error) {
-        console.error(error)
+        console.error(error.response?.data || error.message)
+        throw error
     }
 }
 
@@ -24,26 +25,29 @@ export async function login({ email, password }) {
         })
         return response.data
     } catch (error) {
-        console.error(error)
+        console.error(error.response?.data || error.message)
+        throw error
     }
 }
 
-export async function logout(){
+export async function logout() {
     try {
         const response = await api.get('/logout')
         return response.data
 
     } catch (error) {
-        console.error(error)
+        console.error(error.response?.data || error.message)
+        throw error
     }
 }
 
-export async function getMe(){
+export async function getMe() {
     try {
         const response = await api.get('/get-me')
         return response.data
-        
+
     } catch (error) {
-        console.error(error);        
+        console.error(error.response?.data || error.message)
+        throw error
     }
 }
