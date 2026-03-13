@@ -12,5 +12,7 @@ const interviewRouter = Router()
  */
 
 interviewRouter.post("/", authMiddleware.authUser, upload.single("resume"), interviewController.generateInterviewReportController);
+interviewRouter.get("/", authMiddleware.authUser, interviewController.getAllInterviewReportsController);
+interviewRouter.get("/:interviewId", authMiddleware.authUser, interviewController.getInterviewReportByIdController);
 
 module.exports = interviewRouter 
