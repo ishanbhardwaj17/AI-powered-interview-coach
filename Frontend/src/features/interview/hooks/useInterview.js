@@ -63,7 +63,7 @@ export const useInterview = () => {
         return response?.interviewReport ?? null;
     }, [handleInterviewError, setLoading, setReport]);
 
-    const getReports = async () => {
+    const getReports = useCallback(async () => {
         setLoading(true);
         let response = null;
 
@@ -77,7 +77,7 @@ export const useInterview = () => {
         }
 
         return response?.interviewReports ?? [];
-    };
+    }, [handleInterviewError, setLoading, setReports]);
 
     useEffect(() => {
         if (!interviewId) {

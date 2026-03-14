@@ -25,17 +25,84 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 3rem 1.5rem;
     gap: 2rem;
+    box-sizing: border-box;
+}
+
+.home-layout {
+    width: 100%;
+    max-width: 1280px;
+    
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.home-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.home-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    &__section {
+        background-color: $bg-card;
+        border: 1px solid $border-color;
+        border-radius: 1rem;
+        padding: 1.5rem;
+    }
+
+    &__label {
+        margin: 0 0 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: $text-muted;
+    }
+
+    &__copy {
+        margin: 0;
+        color: $text-muted;
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+}
+
+.home-summary h2 {
+    margin: 0 0 0.6rem;
+    font-size: 1.25rem;
+    line-height: 1.35;
 }
 
 // ── Page Header ──────────────────────────────────────────────────────────────
 .page-header {
-    text-align: center;
+    background-color: $bg-card;
+    border: 1px solid $border-color;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    text-align: left;
+    margin-bottom: 0;
+
+    &__eyebrow {
+        display: inline-block;
+        margin-bottom: 0.7rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: $accent;
+    }
 
     h1 {
-        font-size: 2.25rem;
+        font-size: 2.5rem;
         font-weight: 700;
         margin-bottom: 0.5rem;
         color: $text-primary;
@@ -45,7 +112,7 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
         color: $text-muted;
         font-size: 0.95rem;
         max-width: 480px;
-        margin: 0 auto;
+        margin: 0;
         line-height: 1.6;
     }
 
@@ -57,7 +124,6 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
 // ── Main Card ─────────────────────────────────────────────────────────────────
 .interview-card {
     width: 100%;
-    max-width: 900px;
     background-color: $bg-card;
     border: 1px solid $border-color;
     border-radius: 1rem;
@@ -72,6 +138,7 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 1rem;
         padding: 1rem 1.5rem;
         border-top: 1px solid $border-color;
 
@@ -114,6 +181,13 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
         display: flex;
         align-items: center;
         color: $accent;
+    }
+
+    &__helper {
+        margin: -0.2rem 0 0.25rem;
+        color: $text-muted;
+        font-size: 0.84rem;
+        line-height: 1.6;
     }
 
     &__textarea {
@@ -220,6 +294,15 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
         background-color: rgba($accent, 0.05);
     }
 
+    &--uploaded {
+        border-color: $accent;
+        background-color: rgba($accent, 0.05);
+
+        .dropzone__title {
+            color: $accent;
+        }
+    }
+
     &__icon {
         color: $accent;
         margin-bottom: 0.25rem;
@@ -236,6 +319,13 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
         font-size: 0.75rem;
         color: $text-muted;
         margin: 0;
+    }
+
+    &__file {
+        margin: 0.25rem 0 0;
+        font-size: 0.78rem;
+        color: $text-primary;
+        font-weight: 500;
     }
 }
 
@@ -323,34 +413,121 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
 .recent-reports {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    width: 100%;
-    max-width: 900px;
+    gap: 1rem;
+
+    .content-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h2 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: $text-primary;
+        }
+
+        &__count {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: $bg-input;
+            border: 1px solid $border-color;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: $text-muted;
+        }
+    }
 
     .reports-list {
         display: flex;
+        flex-direction: column;
         gap: 0.75rem;
-        flex-wrap: wrap;
+        list-style: none;
+        padding: 0;
+        margin: 0;
 
         .report-item {
-            background-color: $bg-card;
+            background-color: $bg-panel;
             border: 1px solid $border-color;
-            border-radius: 0.5rem;
+            border-radius: 0.75rem;
             padding: 1rem;
-            flex: 1;
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
             cursor: pointer;
-            flex-shrink: 0;
+            transition: border-color 0.2s, transform 0.15s;
 
-            .match-score {
+            &:hover {
+                border-color: rgba($accent, 0.35);
+                transform: translateY(-1px);
+            }
+
+            h3 {
+                margin: 0;
+                font-size: 1rem;
+                line-height: 1.35;
+            }
+
+            &__label {
+                margin: 0;
+                font-size: 0.68rem;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: $accent;
+            }
+
+            .report-meta {
+                margin: 0;
+                font-size: 0.8rem;
+                color: $text-muted;
+            }
+
+            .report-score {
+                margin: 0;
                 font-size: 0.8rem;
                 font-weight: 600;
-                color: $accent;
-                align-items: flex-start;
             }
         }
+    }
+}
+
+.empty-reports {
+    background-color: $bg-panel;
+    border: 1px dashed $border-color;
+    border-radius: 0.75rem;
+    padding: 1rem;
+
+    &__title {
+        margin: 0 0 0.35rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: $text-primary;
+    }
+
+    &__copy {
+        margin: 0;
+        font-size: 0.84rem;
+        line-height: 1.6;
+        color: $text-muted;
+    }
+}
+
+.report-score {
+    &.score--high {
+        color: #3fb950;
+    }
+
+    &.score--mid {
+        color: #f5a623;
+    }
+
+    &.score--low {
+        color: #ff4d4d;
     }
 }
 
@@ -359,6 +536,10 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
 .page-footer {
     display: flex;
     gap: 1.5rem;
+    width: 100%;
+    max-width: 1280px;
+    justify-content: center;
+    padding-bottom: 0.25rem;
 
     a {
         font-size: 0.8rem;
@@ -369,5 +550,50 @@ $font-stack: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, s
         &:hover {
             color: $text-primary;
         }
+    }
+}
+
+@media (max-width: 1080px) {
+    .home-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .home-sidebar {
+        order: 2;
+    }
+}
+
+@media (max-width: 720px) {
+    .home-page {
+        padding: 1.5rem 1rem;
+    }
+
+    .page-header {
+        text-align: center;
+
+        p {
+            margin: 0 auto;
+        }
+    }
+
+    .interview-card {
+        &__body {
+            flex-direction: column;
+        }
+
+        &__footer {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    }
+
+    .panel-divider {
+        width: 100%;
+        height: 1px;
+    }
+
+    .page-footer {
+        justify-content: center;
+        flex-wrap: wrap;
     }
 }
