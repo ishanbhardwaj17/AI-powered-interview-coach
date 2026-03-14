@@ -28,25 +28,56 @@ const Login = () => {
     }
 
     return (
-        <main>
-            <div className="form-container">
-                <h1>Login</h1>
-                <form onSubmit={handleSubmit}>
-                    <div className="input-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            onChange={(e) => { setEmail(e.target.value) }}
-                            type="email" id="email" name='email' placeholder='Enter email address' />
+        <main className="auth-page">
+            <div className="auth-shell">
+                <section className="auth-panel auth-panel--brand">
+                    <span className="auth-badge">Interview Planner</span>
+                    <h1>Step back into your interview workspace.</h1>
+                    <p>
+                        Pick up where you left off, review your reports, and keep building targeted preparation plans.
+                    </p>
+
+                    <div className="auth-feature-list">
+                        <div className="auth-feature-card">
+                            <p className="auth-feature-card__label">Focused prep</p>
+                            <strong>Technical and behavioral guidance in one place.</strong>
+                        </div>
+                        <div className="auth-feature-card">
+                            <p className="auth-feature-card__label">Saved reports</p>
+                            <strong>Return to past strategies without rebuilding from scratch.</strong>
+                        </div>
                     </div>
-                    <div className="input-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            onChange={(e) => { setPassword(e.target.value) }}
-                            type="password" id="password" name='password' placeholder='Enter password' />
+                </section>
+
+                <section className="auth-panel auth-panel--form">
+                    <div className="auth-form-card">
+                        <div className="auth-form-card__header">
+                            <span className="auth-form-card__eyebrow">Welcome back</span>
+                            <h2>Login</h2>
+                            <p>Sign in to continue creating and reviewing your custom interview plans.</p>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="auth-form">
+                            <div className="auth-input-group">
+                                <label htmlFor="email">Email</label>
+                                <input
+                                    onChange={(e) => { setEmail(e.target.value) }}
+                                    type="email" id="email" name='email' placeholder='Enter email address' />
+                            </div>
+                            <div className="auth-input-group">
+                                <label htmlFor="password">Password</label>
+                                <input
+                                    onChange={(e) => { setPassword(e.target.value) }}
+                                    type="password" id="password" name='password' placeholder='Enter password' />
+                            </div>
+                            <button className='auth-submit-btn'>Login</button>
+                        </form>
+
+                        <p className="auth-switch">
+                            Don&apos;t have an account? <Link to={"/register"}>Register</Link>
+                        </p>
                     </div>
-                    <button className='button primary-button' >Login</button>
-                </form>
-                <p>Don't have an account? <Link to={"/register"} >Register</Link> </p>
+                </section>
             </div>
         </main>
     )

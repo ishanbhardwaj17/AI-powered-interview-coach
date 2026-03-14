@@ -8,8 +8,29 @@ const Home = () => {
     const [jobDescription, setJobDescription] = useState('');
     const [selfDescription, setSelfDescription] = useState('');
     const resumeInputRef = useRef(null);
+    const jobDescriptionRef = useRef(null);
+    const selfDescriptionRef = useRef(null);
 
     const navigate = useNavigate()
+
+    const autoResizeTextarea = (element) => {
+        if (!element) {
+            return;
+        }
+
+        element.style.height = 'auto';
+        element.style.height = `${element.scrollHeight}px`;
+    };
+
+    const handleJobDescriptionChange = (e) => {
+        setJobDescription(e.target.value);
+        autoResizeTextarea(e.target);
+    };
+
+    const handleSelfDescriptionChange = (e) => {
+        setSelfDescription(e.target.value);
+        autoResizeTextarea(e.target);
+    };
 
     const handleGenerate = async () => {
         const resumeFile = resumeInputRef.current?.files[0] || null;
@@ -59,13 +80,14 @@ const Home = () => {
                             <span className='badge badge--required'>Required</span>
                         </div>
                         <textarea
-                            onChange={(e) => { setJobDescription(e.target.value) }}
-
+                            ref={jobDescriptionRef}
+                            value={jobDescription}
+                            onChange={handleJobDescriptionChange}
                             className='panel__textarea'
                             placeholder={`Paste the full job description here...\ne.g. 'Senior Frontend Engineer at Google requires proficiency in React, TypeScript, and large-scale system design...'`}
                             maxLength={5000}
                         />
-                        <div className='char-counter'>0 / 5000 chars</div>
+                        <div className='char-counter'>{jobDescription.length} / 5000 chars</div>
                     </div>
 
                     {/* Vertical Divider */}
@@ -103,7 +125,9 @@ const Home = () => {
                         <div className='self-description'>
                             <label className='section-label' htmlFor='selfDescription'>Quick Self-Description</label>
                             <textarea
-                                onChange={(e) => { setSelfDescription(e.target.value) }}
+                                ref={selfDescriptionRef}
+                                value={selfDescription}
+                                onChange={handleSelfDescriptionChange}
                                 id='selfDescription'
                                 name='selfDescription'
                                 className='panel__textarea panel__textarea--short'
