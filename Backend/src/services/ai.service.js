@@ -132,7 +132,7 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
     const ai = getAiClient();
     const prompt = `Generate an interview report for a candidate with the following details:
 Resume:
-${resume}
+${resume || "Not provided"}
 
 Self Description:
 ${selfDescription || "Not provided"}

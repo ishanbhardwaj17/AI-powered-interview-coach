@@ -9,15 +9,9 @@ const interviewReportModel = require("../models/interviewReport.model");
 async function generateInterviewReportController(req, res) {
 
     try {
-
-        if (!req.file) {
-            return res.status(400).json({
-                message: "Resume file is required"
-            });
-        }
-
         const { selfDescription, jobDescription } = req.body;
         const trimmedJobDescription = jobDescription?.trim();
+        const trimmedSelfDescription = selfDescription?.trim() || "";
 
         if (!trimmedJobDescription) {
             return res.status(400).json({
@@ -25,22 +19,26 @@ async function generateInterviewReportController(req, res) {
             });
         }
 
-        const parser = new PDFParse({
-            data: Uint8Array.from(req.file.buffer)
-        });
+        let resumeText = "";
 
-        const resumeContent = await parser.getText();
-        const resumeText = resumeContent?.text?.trim();
+        if (req.file) {
+            const parser = new PDFParse({
+                data: Uint8Array.from(req.file.buffer)
+            });
 
-        if (!resumeText) {
+            const resumeContent = await parser.getText();
+            resumeText = resumeContent?.text?.trim() || "";
+        }
+
+        if (!resumeText && !trimmedSelfDescription) {
             return res.status(400).json({
-                message: "Could not extract text from the uploaded resume"
+                message: "Either resume or self description is required"
             });
         }
 
         const interviewReportByAi = await generateInterviewReport({
             resume: resumeText,
-            selfDescription,
+            selfDescription: trimmedSelfDescription,
             jobDescription: trimmedJobDescription
         });
 
@@ -52,7 +50,7 @@ async function generateInterviewReportController(req, res) {
         const interviewReport = await interviewReportModel.create({
             user: req.user.id,
             resume: resumeText,
-            selfDescription,
+            selfDescription: trimmedSelfDescription,
             jobDescription: trimmedJobDescription,
             title,
             ...interviewReportByAi
